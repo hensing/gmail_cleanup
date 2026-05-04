@@ -1,0 +1,30 @@
+IMAPAccount gmail
+Host imap.gmail.com
+User YOUR@gmail.com
+PassCmd "cat /path/to/apppassword.txt"
+SSLType IMAPS
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+SubFolders Verbatim
+Path /data/maildir/
+Inbox /data/maildir/INBOX
+AltMap yes      # PFLICHT: bettet IMAP-UID als Präfix in Dateinamen ein
+                # Dateiname-Format: {uid}_{timestamp}.{pid}.{host}:2,flags
+
+Channel gmail
+Far :gmail-remote:"[Gmail]/All Mail"
+Near :gmail-local:"All Mail"
+Create Near
+Sync Pull       # nur Remote→Local, nie umgekehrt
+Expunge Near    # lokale Kopien löschen wenn auf Remote nicht mehr vorhanden
+SyncState *
+
+# Nutzung:
+#   mbsync -a              # vollständiger / inkrementeller Sync
+#   mbsync gmail           # nur diesen Channel
+#
+# Cron-Beispiel (täglich 3 Uhr):
+#   0 3 * * * mbsync -a && docker compose -f /path/to/docker-compose.yml run --rm app fetch

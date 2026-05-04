@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Wrapper for docker compose run.
+# Usage: ./mail <subcommand> [args...]
+#   ./mail fetch
+#   ./mail review
+#   ./mail execute --no-dry-run
+set -e
+docker compose run --rm -it app "$@"

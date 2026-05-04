@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    # Mount the data directory so emails.db and actions.log persist between runs
+    volumes:
+      - ./data:/data
+      # Mount .env read-only so credentials never end up inside the image
+      - ./.env:/app/.env:ro
+    environment:
+      - DB_PATH=/data/emails.db
+      - LOG_PATH=/data/actions.log
+    # Required for the interactive 'review' subcommand (TTY + stdin)
+    stdin_open: true
+    tty: true
