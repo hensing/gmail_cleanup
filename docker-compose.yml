@@ -1,5 +1,6 @@
 services:
   app:
+    image: ${DOCKER_IMAGE:-ghcr.io/hensing/gmail_cleanup:latest}
     build: .
     # Mount the data directory so emails.db and actions.log persist between runs
     volumes:

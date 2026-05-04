@@ -11,20 +11,20 @@ MaildirStore gmail-local
 SubFolders Verbatim
 Path /data/maildir/
 Inbox /data/maildir/INBOX
-AltMap yes      # PFLICHT: bettet IMAP-UID als Präfix in Dateinamen ein
-                # Dateiname-Format: {uid}_{timestamp}.{pid}.{host}:2,flags
+AltMap yes      # required: embeds IMAP UID as a numeric prefix in filenames
+                # filename format: {uid}_{timestamp}.{pid}.{host}:2,flags
 
 Channel gmail
-Far :gmail-remote:"[Gmail]/All Mail"
+Far :gmail-remote:\All
 Near :gmail-local:"All Mail"
 Create Near
-Sync Pull       # nur Remote→Local, nie umgekehrt
-Expunge Near    # lokale Kopien löschen wenn auf Remote nicht mehr vorhanden
+Sync Pull       # one-directional: remote → local only, never the reverse
+Expunge Near    # remove local copies when they disappear from Gmail (after Trash)
 SyncState *
 
-# Nutzung:
-#   mbsync -a              # vollständiger / inkrementeller Sync
-#   mbsync gmail           # nur diesen Channel
+# Usage:
+#   mbsync -a              # full / incremental sync
+#   mbsync gmail           # this channel only
 #
-# Cron-Beispiel (täglich 3 Uhr):
+# Cron example (daily at 3 AM):
 #   0 3 * * * mbsync -a && docker compose -f /path/to/docker-compose.yml run --rm app fetch

@@ -180,7 +180,7 @@ Review and adjust classifications before anything is deleted.
 | `wa` | Whitelist all emails in this cluster |
 | `ws` | Permanently whitelist sender address (add to contacts) |
 | `c <uid> CAT` | Override this email's category |
-| `f [CAT\|regex]` | Filter by category (`f TRASH`) or subject regex (`f Neue Nachricht.*`); `f` clears |
+| `f [CAT\|regex]` | Filter by category (`f TRASH`) or subject regex (`f Your order.*`); `f` clears |
 | `rx CAT <pattern>` | Apply category to emails in this cluster whose subject matches regex |
 | `n` / `p` | Next / previous page |
 | `b` | Back to cluster view |
@@ -189,11 +189,11 @@ Review and adjust classifications before anything is deleted.
 
 ```
 # In cluster view — applies globally to all emails
-rx KEEP Bestellung von .*
-rx TRASH Deine Sendung .*
+rx KEEP Your order .*
+rx TRASH Your shipment .*
 
 # In drill-down — applies only within the current cluster
-rx KEEP Neue Nachricht von .*
+rx KEEP New message from .*
 ```
 
 ### Step 4 – Execute
